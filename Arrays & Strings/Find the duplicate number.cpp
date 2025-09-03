@@ -23,15 +23,8 @@ Approach 2: Hashing
 Time Complexity: O(n)
 Space Complexity: O(n)
 --------------------------------------------------------------------------------
-Approach 3: Negative Marking (Modify array temporarily)
-- For each number x, go to index abs(x) - 1.
-- If the value at that index is negative, x is the duplicate.
-- Otherwise, negate the value at that index and continue.
-Time Complexity: O(n)
-Space Complexity: O(1)
-Note: This modifies the array, which might not be allowed in strict interview settings.
---------------------------------------------------------------------------------
-Approach 4: Floyd’s Cycle Detection (Tortoise & Hare) → OPTIMAL
+
+Approach 3: Floyd’s Cycle Detection (Tortoise & Hare) → OPTIMAL
 - Treat the array as a linked list where nums[i] points to nums[nums[i]].
 - Because there is a duplicate, a cycle must exist.
 - Use slow & fast pointers to detect the cycle.
@@ -41,19 +34,6 @@ Time Complexity: O(n)
 Space Complexity: O(1)
 --------------------------------------------------------------------------------
 */
-
-// ---------------- Negative Marking ----------------
-class SolutionNegMark {
-public:
-    int findDuplicate(vector<int>& nums) {
-        for (int i = 0; i < nums.size(); i++) {
-            int idx = abs(nums[i]) - 1;
-            if (nums[idx] < 0) return abs(nums[i]);
-            nums[idx] = -nums[idx];
-        }
-        return -1;
-    }
-};
 
 // ---------------- Floyd's Cycle Detection (Optimal) ----------------
 class Solution {
