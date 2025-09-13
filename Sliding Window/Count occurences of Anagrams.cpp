@@ -1,5 +1,5 @@
 /*
-Problem Statement:
+Problem Statement: (or Leetcode 438)
 ------------------
 Given two strings `p` (pattern) and `t` (text), count the number of substrings 
 in `t` that are anagrams of `p`.
@@ -34,40 +34,30 @@ Space Complexity: O(1)
 
 class Solution {
 public:
-    int search(string &p, string &t) {
-        int n = t.length(), k = p.length(), i = 0, j = 0, c = 0, r = 0;
-        unordered_map<char, int> m;
-        
-        // Build frequency map of pattern
-        for (i = 0; i < k; i++) {
-            m[p[i]]++;
+    vector<int> findAnagrams(string p, string t) {
+        unordered_map<char,int>m;
+        for(char ch:t){  // build frequency map for p
+            m[ch]++;
         }
-        c = m.size(); // number of distinct characters to match
-        i = 0;
-        
-        // Sliding window over text
-        while (j < n) {
-            if (m.find(t[j]) != m.end()) {
-                m[t[j]]--;
-                if (m[t[j]] == 0)
-                    c--;
+
+        int i=0,j,c=m.size(),n=p.length(),r=0;
+        for(j=0;j<n;j++){
+            if(m.count(p[j])){   // decrease frequency of current char
+               m[p[j]]--;
+               if(m[p[j]]==0)    // matched completely
+                  c--;
+            }
+            if(j-i+1==t.size()){ // when window size == p.size()
+              if(c==0)
+                r++;
+              if(m.count(p[i])){  
+                 if(m[p[i]]==0) c++;
+                 m[p[i]]++;
+              }
+              i++;              // shrink window
             }
             
-            if (j - i + 1 == k) { // window size reached
-                if (c == 0)
-                    r++; // found an anagram
-                
-                // Remove the character going out of window
-                if (m.find(t[i]) != m.end()) {
-                    if (m[t[i]] == 0)
-                        c++;
-                    m[t[i]]++;
-                }
-                i++;
-            }
-            j++;
         }
         return r;
     }
 };
-
