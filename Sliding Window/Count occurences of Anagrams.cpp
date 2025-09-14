@@ -33,26 +33,26 @@ Space Complexity: O(1)
 
 
 class Solution {
-public:
-    vector<int> findAnagrams(string p, string t) {
+  public:
+    int search(string &p, string &t) {
         unordered_map<char,int>m;
-        for(char ch:t){  // build frequency map for p
+        for(char ch:p){  // build frequency map for p
             m[ch]++;
         }
 
-        int i=0,j,c=m.size(),n=p.length(),r=0;
+        int i=0,j,c=m.size(),n=t.length(),r=0;
         for(j=0;j<n;j++){
-            if(m.count(p[j])){   // decrease frequency of current char
-               m[p[j]]--;
-               if(m[p[j]]==0)    // matched completely
+            if(m.count(t[j])){   // decrease frequency of current char
+               m[t[j]]--;
+               if(m[t[j]]==0)    // matched completely
                   c--;
             }
-            if(j-i+1==t.size()){ // when window size == p.size()
+            if(j-i+1==p.size()){ // when window size == p.size()
               if(c==0)
                 r++;
-              if(m.count(p[i])){  
-                 if(m[p[i]]==0) c++;
-                 m[p[i]]++;
+              if(m.count(t[i])){  
+                 if(m[t[i]]==0) c++;
+                 m[t[i]]++;
               }
               i++;              // shrink window
             }
