@@ -29,26 +29,6 @@ Space Complexity: O(1)
 
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-
-class Solution {
-public:
-    // Approach 1: Brute-force with 2 loops
-    int longestOnesBruteForce(vector<int>& nums, int k) {
-        int n = nums.size();
-        int maxLength = 0;
-
-        for (int i = 0; i < n; i++) {
-            int zerosCount = 0;
-            for (int j = i; j < n; j++) {
-                if (nums[j] == 0) zerosCount++;
-                if (zerosCount > k) break;  // Stop if zeros exceed k
-                maxLength = max(maxLength, j - i + 1);
-            }
-        }
-        return maxLength;
-    }
 
     // Approach 2: Sliding Window
     int longestOnes(vector<int>& nums, int k) {
