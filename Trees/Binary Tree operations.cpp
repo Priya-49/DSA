@@ -39,6 +39,18 @@ void postOrder(Node *root){
     cout<<root->data;
 }
 
+void levelOrder(Node *root){ //level wise
+    queue<Node *>q;
+    q.push(root);
+    while(!q.empty()){
+        Node *curr=q.front();
+        q.pop();
+        cout<<curr->data;
+        if(curr->left!=0) q.push(curr->left);
+        if(curr->right!=0) q.push(curr->right);
+    }
+}
+
 int height(Node *root){
     if(root==NULL) return 0;
     int left_tree=height(root->left);
@@ -63,6 +75,7 @@ int main(){
     preOrder(root);
     inOrder(root);
     postOrder(root);
+    levelOrder(root);
     cout<<endl<<"Height of Tree is: "<<height(root)<<endl;
     cout<<"Sum of Nodes is:"<<sum(root)<<endl;
     cout<<"Total no. of nodes is: "<<count(root);
