@@ -77,7 +77,7 @@ int main(){
     postOrder(root);
     levelOrder(root);
     cout<<endl<<"Height of Tree is: "<<height(root)<<endl;
-    cout<<"Sum of Nodes is:"<<sum(root)<<endl;
+    cout<<"Sum of Nodes is: "<<sum(root)<<endl;
     cout<<"Total no. of nodes is: "<<count(root);
     return 0;
 }
