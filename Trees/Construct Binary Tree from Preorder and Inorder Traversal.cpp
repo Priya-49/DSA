@@ -46,9 +46,6 @@ for the recursion stack and hash map storing inorder indices.
 
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-
 // Definition for a binary tree node.
 struct TreeNode {
     int val;
@@ -81,25 +78,3 @@ public:
         return helper(preorder, inorder, preIdx, 0, inorder.size() - 1, inmap);
     }
 };
-
-// Example usage:
-void printInorder(TreeNode* root) {
-    if (!root) return;
-    printInorder(root->left);
-    cout << root->val << " ";
-    printInorder(root->right);
-}
-
-int main() {
-    vector<int> preorder = {3, 9, 20, 15, 7};
-    vector<int> inorder  = {9, 3, 15, 20, 7};
-
-    Solution sol;
-    TreeNode* root = sol.buildTree(preorder, inorder);
-
-    cout << "Inorder traversal of constructed tree: ";
-    printInorder(root);
-    cout << endl;
-
-    return 0;
-}
