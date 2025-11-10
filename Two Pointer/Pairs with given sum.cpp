@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 /*
 Problem Statement:
 Given an array arr[] of integers and an integer target t,
