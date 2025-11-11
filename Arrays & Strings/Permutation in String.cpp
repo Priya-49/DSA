@@ -1,60 +1,61 @@
 /*
-    Problem: Check if s2 contains a permutation of s1
-    Approach: Sliding Window + Frequency Map
-    ------------------------------------------------
-    1. Build a frequency map 'm' for all characters in s1.
-    2. Use a sliding window of size k = s1.length() on s2.
-    3. For each character entering the window:
-       - Decrement its count in 'm' if it exists.
-       - If its count reaches zero, decrement 'c' (number of unique chars left to match).
-    4. When window size hits k:
-       - If c == 0, all characters matched → return true.
-       - Otherwise, remove the char leaving the window from the map:
-           - If count was zero, increment c.
-           - Increment its count in the map.
-    5. Slide the window forward.
-    6. If no permutation is found, return false.
+Problem: Leetcode 567
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+In other words, return true if one of s1's permutations is the substring of s2.
 
-    Time Complexity: O(n) 
-    Space Complexity: O(k) for the map
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+
+Approach: Sliding Window + Frequency Array
+------------------------------------------------
+1. Build a frequency array 'freq' of size 26 for all characters in s1.
+2. Use a sliding window of size k = s1.length() on s2.
+3. For each character entering the window:
+   - If freq[char] > 0, decrement the count of characters left to match 'c'.
+   - Decrement freq[char] in the array.
+4. When window size reaches k:
+   - If c == 0, all characters matched → return true.
+   - Otherwise, remove the character leaving the window:
+       - If freq[char] >= 0, increment c.
+       - Increment freq[char] back in the array.
+5. Slide the window forward.
+6. If no permutation is found, return false.
+
+Note: Since strings contain only lowercase letters, we are using a fixed array of size 26 
+      instead of a map for efficiency (faster and less memory usage).
 */
 
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        unordered_map<char,int>m;  // frequency map of s1
-        for(auto ch : s1){
-            m[ch]++;
+        int n = s2.length(), k = s1.length();
+        if (k > n) return false;
+
+        int freq[26] = {0}; // frequency of characters in s1
+        for (int i = 0; i < k; i++) {
+            freq[s1[i] - 'a']++;
         }
 
-        int i = 0;                   // window start
-        int j, n = s2.length();      // window end iterator & length of s2
-        int k = s1.length();         // window size = length of s1
-        int c = m.size();             // number of unique characters to match
+        int c = k;  // number of characters left to match
+        int i = 0;  // window start
 
-        for(j = 0; j < n; j++){
-            char ch = s2[j];          // character entering the window
+        for (int j = 0; j < n; j++) {
+            // character entering the window
+            if (freq[s2[j] - 'a'] > 0) c--;
+            freq[s2[j] - 'a']--;
 
-            // if the entering char is in the map, decrement its count
-            if(m.count(ch)){
-                m[ch]--;
-                if(m[ch] == 0) c--;   // one unique char fully matched
-            }
+            // when window size reaches k
+            if (j - i + 1 == k) {
+                if (c == 0) return true; // permutation found
 
-            // When window size reaches k
-            if(j - i + 1 == k){        
-                if(c == 0) return true; // all chars matched → permutation exists
-
-                char ch = s2[i];        // character leaving the window
-                if(m.count(ch)){
-                    if(m[ch] == 0) c++; // previously fully matched → now unmatched
-                    m[ch]++;             // increment count back
-                }
-                i++;                     // slide the window forward
+                // character leaving the window
+                if (freq[s2[i] - 'a'] >= 0) c++;
+                freq[s2[i] - 'a']++;
+                i++; // slide window forward
             }
         }
 
-        return false;  // no permutation found
+        return false; // no permutation found
     }
 };
-
