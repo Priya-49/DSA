@@ -44,3 +44,28 @@ public:
     }
 };
 
+//--------C#-------
+
+public class Solution {
+   public int BitCount(int n){
+    int c=0;
+      while(n>0){
+        n&=(n-1);
+        c++;
+      }
+      return c;
+   }
+
+    public IList<string> ReadBinaryWatch(int turnedOn) {
+        List<string> res=new List<string>();
+        for(int i=0;i<12;i++){
+            for(int j=0;j<60;j++){
+                if(BitCount(i)+BitCount(j)==turnedOn){
+                    res.Add($"{i}:{j:D2}");
+                }
+            }
+        }
+        return res;
+    }
+}
+
