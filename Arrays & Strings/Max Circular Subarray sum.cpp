@@ -68,3 +68,33 @@ public:
     }
 };
 
+//----------C#-----------
+public class Solution {
+    public int MaxKadane(int[] nums){
+        int s=0,ms=int.MinValue,n=nums.Length,i;
+        for(i=0;i<n;i++){
+            s+=nums[i];
+            ms=Math.Max(ms,s);
+            if(s<0) s=0;
+        }
+        return ms;
+    }
+    public int MinKadane(int[] nums){
+        int s=0,ms=int.MaxValue,n=nums.Length,i;
+        for(i=0;i<n;i++){
+            if(nums[i]<nums[i]+s)
+               s=nums[i];
+            else
+               s+=nums[i];   
+            ms=Math.Min(ms,s);
+        }
+        return ms;
+    }
+    public int MaxSubarraySumCircular(int[] nums) {
+        int MaxSum=MaxKadane(nums),MinSum=MinKadane(nums),n=nums.Length;
+        int totalSum=nums[0..n].Sum();
+        if(MaxSum<0) return MaxSum;
+        return Math.Max(MaxSum,totalSum-MinSum);
+    }
+}
+
