@@ -24,3 +24,19 @@ int maxChunksToSorted(vector<int>& a) {
     }
     return chunks;
 }
+
+
+
+//---------C#------------
+public class Solution {
+    public int MaxChunksToSorted(int[] arr) {
+        int me=int.MinValue,i=0,c=0,n=arr.Length;
+        while(i<n){
+             me=Math.Max(me,arr[i]);
+             if(i==me)
+                c++;
+             i++;
+        }
+        return c;
+    }
+}
