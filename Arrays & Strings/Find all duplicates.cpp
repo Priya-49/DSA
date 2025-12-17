@@ -33,3 +33,21 @@ public:
     }
 };
 
+//-----------C#------------
+
+public class Solution {
+    public IList<int> FindDuplicates(int[] nums) {
+        List<int> res=new List<int>();
+        for(int i=0;i<nums.Length;i++){
+            int j=Math.Abs(nums[i])-1;
+            if(nums[j]<0)
+                res.Add(Math.Abs(nums[i]));
+            
+            else
+                nums[j]=-nums[j];
+            
+        }
+        return res;
+    }
+}
+
